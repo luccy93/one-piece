@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Bebas_Neue, Bangers, Cormorant_Garamond, Luckiest_Guy, Inter } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/Cursor";
+import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
+import CartDrawer from "@/components/CartDrawer";
+import Header from "@/components/Header";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
@@ -24,8 +29,16 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${bebasNeue.variable} ${bangers.variable} ${luckiestGuy.variable} ${cormorant.variable} antialiased bg-[#04060c] text-white`}
       >
-        <CustomCursor />
-        {children}
+        <SmoothScroll>
+          <WishlistProvider>
+            <CartProvider>
+              <CustomCursor />
+              <CartDrawer />
+              <Header />
+              {children}
+            </CartProvider>
+          </WishlistProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
